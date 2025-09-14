@@ -2,41 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Astrologer Design System - Cosmic & Celestial Theme */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Cosmic Color Palette */
+    --background: 240 15% 6%;
+    --foreground: 48 100% 85%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 240 15% 8%;
+    --card-foreground: 48 100% 85%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 15% 8%;
+    --popover-foreground: 48 100% 85%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 280 100% 65%;
+    --primary-foreground: 240 15% 6%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 48 100% 70%;
+    --secondary-foreground: 240 15% 6%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 15% 12%;
+    --muted-foreground: 240 10% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 320 100% 75%;
+    --accent-foreground: 240 15% 6%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 48 100% 85%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 240 15% 18%;
+    --input: 240 15% 12%;
+    --ring: 280 100% 65%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Cosmic Gradients */
+    --gradient-cosmic: linear-gradient(135deg, hsl(280 100% 65%), hsl(320 100% 75%), hsl(48 100% 70%));
+    --gradient-nebula: linear-gradient(180deg, hsl(240 15% 6%), hsl(260 50% 15%), hsl(240 15% 6%));
+    --gradient-aurora: linear-gradient(90deg, hsl(280 100% 65% / 0.3), hsl(320 100% 75% / 0.3), hsl(200 100% 70% / 0.3));
+    --gradient-starfield: radial-gradient(ellipse at center, hsl(280 100% 65% / 0.2), transparent 70%);
+
+    /* Mystical Shadows & Glows */
+    --shadow-cosmic: 0 0 30px hsl(280 100% 65% / 0.3);
+    --shadow-golden: 0 0 25px hsl(48 100% 70% / 0.4);
+    --shadow-ethereal: 0 10px 40px hsl(240 15% 6% / 0.8);
+    --glow-primary: 0 0 20px hsl(280 100% 65% / 0.5);
+    --glow-secondary: 0 0 20px hsl(48 100% 70% / 0.5);
+
+    /* Animation Timings */
+    --transition-cosmic: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s ease-out;
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +119,132 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
+    background: var(--gradient-nebula);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair;
+  }
+}
+
+/* Cosmic Animations & Effects */
+@layer components {
+  .cosmic-glow {
+    box-shadow: var(--glow-primary);
+    transition: var(--transition-cosmic);
+  }
+
+  .cosmic-glow:hover {
+    box-shadow: var(--shadow-cosmic);
+    transform: translateY(-5px);
+  }
+
+  .golden-glow {
+    box-shadow: var(--glow-secondary);
+  }
+
+  .floating-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .star-sparkle {
+    animation: sparkle 3s linear infinite;
+  }
+
+  .constellation-rotate {
+    animation: constellation 20s linear infinite;
+  }
+
+  .cosmic-pulse {
+    animation: cosmic-pulse 4s ease-in-out infinite;
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 1s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+
+  .cosmic-card {
+    @apply bg-card/80 backdrop-blur-sm border border-border/50 rounded-3xl p-8;
+    @apply transition-all duration-500 hover:bg-card/90 hover:border-primary/30;
+    @apply hover:shadow-2xl hover:-translate-y-2;
+    background: linear-gradient(135deg, hsl(var(--card) / 0.8), hsl(var(--card) / 0.6));
+  }
+
+  .hero-button {
+    @apply bg-primary text-primary-foreground px-8 py-4 rounded-full font-semibold;
+    @apply transition-all duration-300 hover:scale-105;
+    background: var(--gradient-cosmic);
+    box-shadow: var(--glow-primary);
+  }
+
+  .hero-button:hover {
+    box-shadow: var(--shadow-cosmic);
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-bold text-center mb-4;
+    background: var(--gradient-cosmic);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .starfield {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, hsl(48 100% 85%), transparent),
+      radial-gradient(2px 2px at 40px 70px, hsl(280 100% 65%), transparent),
+      radial-gradient(1px 1px at 90px 40px, hsl(320 100% 75%), transparent),
+      radial-gradient(1px 1px at 130px 80px, hsl(48 100% 85%), transparent),
+      radial-gradient(2px 2px at 160px 30px, hsl(280 100% 65%), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: sparkle 20s linear infinite;
+    opacity: 0.6;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes constellation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes cosmic-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px hsl(280 100% 65% / 0.3);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 40px hsl(280 100% 65% / 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

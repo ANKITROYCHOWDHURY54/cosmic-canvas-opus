@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        'playfair': ['Playfair Display', 'serif'],
+        'inter': ['Inter', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -65,25 +69,50 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" }
+        },
+        "sparkle": {
+          "0%, 100%": { opacity: "0.6" },
+          "50%": { opacity: "1" }
+        },
+        "constellation": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" }
+        },
+        "cosmic-pulse": {
+          "0%, 100%": { 
+            boxShadow: "0 0 20px hsl(280 100% 65% / 0.3)",
+            transform: "scale(1)"
+          },
+          "50%": { 
+            boxShadow: "0 0 40px hsl(280 100% 65% / 0.6)",
+            transform: "scale(1.05)"
+          }
+        },
+        "fadeInUp": {
+          "to": {
+            opacity: "1",
+            transform: "translateY(0)"
+          }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "float": "float 6s ease-in-out infinite",
+        "sparkle": "sparkle 3s linear infinite",
+        "constellation": "constellation 20s linear infinite",
+        "cosmic-pulse": "cosmic-pulse 4s ease-in-out infinite",
+        "fade-in-up": "fadeInUp 1s ease-out forwards"
       },
     },
   },
