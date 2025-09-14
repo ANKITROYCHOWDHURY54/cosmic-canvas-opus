@@ -54,10 +54,22 @@ const About = () => {
               </p>
             </div>
             <div className="mt-8">
-              <button className="hero-button mr-4">
+              <button 
+                onClick={() => {
+                  const element = document.getElementById('contact');
+                  if (element) element.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="hero-button mr-4"
+              >
                 Schedule Consultation
               </button>
-              <button className="px-8 py-4 border-2 border-secondary/50 rounded-full font-semibold text-secondary hover:bg-secondary/10 transition-all duration-300">
+              <button 
+                onClick={() => {
+                  const element = document.getElementById('testimonials');
+                  if (element) element.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-8 py-4 border-2 border-secondary/50 rounded-full font-semibold text-secondary hover:bg-secondary/10 transition-all duration-300"
+              >
                 Read My Story
               </button>
             </div>

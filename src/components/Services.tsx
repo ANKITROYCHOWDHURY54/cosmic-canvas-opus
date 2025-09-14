@@ -85,7 +85,13 @@ const Services = () => {
                   <span className="text-2xl font-bold text-secondary">{service.price}</span>
                   <span className="text-muted-foreground ml-2">/ {service.duration}</span>
                 </div>
-                <button className="text-primary hover:text-secondary transition-colors duration-300 font-medium">
+                <button 
+                  onClick={() => {
+                    const element = document.getElementById('contact');
+                    if (element) element.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="text-primary hover:text-secondary transition-colors duration-300 font-medium hover:scale-105 transform"
+                >
                   Book Now →
                 </button>
               </div>

@@ -63,7 +63,13 @@ const ZodiacSigns = () => {
               that shape who you are and how you interact with the universe. Understanding 
               your sign is the first step toward cosmic self-awareness.
             </p>
-            <button className="hero-button">
+            <button 
+              onClick={() => {
+                const element = document.getElementById('contact');
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="hero-button"
+            >
               Get Your Personal Reading
             </button>
           </div>
@@ -99,7 +105,13 @@ const ZodiacSigns = () => {
               tailored to your unique astrological profile. Stay aligned 
               with the celestial energies that guide your path.
             </p>
-            <button className="px-8 py-3 bg-secondary/20 text-secondary rounded-full font-semibold hover:bg-secondary/30 transition-all duration-300">
+            <button 
+              onClick={() => {
+                const element = document.getElementById('contact');
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="px-8 py-3 bg-secondary/20 text-secondary rounded-full font-semibold hover:bg-secondary/30 transition-all duration-300"
+            >
               Subscribe to Daily Readings
             </button>
           </div>

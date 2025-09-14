@@ -117,10 +117,22 @@ const Testimonials = () => {
             Join hundreds of souls who have discovered their cosmic purpose and found 
             clarity through the ancient wisdom of the stars.
           </p>
-          <button className="hero-button mr-4">
+          <button 
+            onClick={() => {
+              const element = document.getElementById('contact');
+              if (element) element.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="hero-button mr-4"
+          >
             Book Your Reading
           </button>
-          <button className="px-8 py-4 border-2 border-primary/50 rounded-full font-semibold text-foreground hover:bg-primary/10 transition-all duration-300">
+          <button 
+            onClick={() => {
+              const element = document.getElementById('services');
+              if (element) element.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="px-8 py-4 border-2 border-primary/50 rounded-full font-semibold text-foreground hover:bg-primary/10 transition-all duration-300"
+          >
             View All Services
           </button>
         </div>
