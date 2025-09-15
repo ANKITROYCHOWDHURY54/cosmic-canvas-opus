@@ -14,7 +14,7 @@ const Contact = () => {
     birthPlace: "",
     message: ""
   });
-  
+
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -305,7 +305,7 @@ const Contact = () => {
                   <Send className="w-5 h-5" />
                   <span>Schedule My Reading</span>
                 </button>
-                </form>
+              </form>
               )}
             </div>
           </div>

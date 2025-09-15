@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, Star, Moon, Sparkles } from "lucide-react";
+import { Menu, X, Star, Home, Sparkles } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -97,15 +97,15 @@ const Navigation = () => {
             onClick={() => scrollToSection("#home")}
           >
             <div className="relative">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-primary via-accent to-secondary rounded-full flex items-center justify-center cosmic-pulse glow-on-hover">
-                <Moon className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-background constellation-rotate" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-primary via-accent to-secondary rounded-full flex items-center justify-center cosmic-pulse glow-on-hover logo-floating">
+                <Home className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-background" />
               </div>
               <Star className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-secondary star-sparkle" />
               <Sparkles className="absolute -bottom-1 -left-1 w-2 h-2 sm:w-3 sm:h-3 text-accent floating-animation" />
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-500 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent group-hover:from-primary group-hover:to-accent">
-                Celestial Guidance
+                Astrologer Arpit Sharma 
               </h1>
               <p className="text-xs sm:text-sm text-muted-foreground font-medium">Luna Starweaver</p>
             </div>

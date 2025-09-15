@@ -299,6 +299,29 @@
     transform: translateY(-2px);
   }
 
+  /* Strong text shadow for better readability on video backgrounds */
+  .text-glow-strong {
+    text-shadow:
+      0 3px 18px rgba(0, 0, 0, 0.78),
+      0 0 32px rgba(0, 0, 0, 0.7),
+      0 0 6px rgba(0, 0, 0, 0.9);
+  }
+
+  /* High-contrast text stroke + shadow combo for max legibility */
+  .text-contrast-outline {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.75);
+    text-shadow:
+      0 2px 10px rgba(0, 0, 0, 0.7),
+      0 0 18px rgba(0, 0, 0, 0.6),
+      0 0 2px rgba(0, 0, 0, 0.9);
+  }
+
+  /* Smooth up-down float for navbar logo */
+  .logo-floating {
+    animation: logoFloat 2.4s ease-in-out infinite;
+    will-change: transform;
+  }
+
   .modern-input {
     @apply w-full px-6 py-4 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground;
     @apply focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-500 text-lg;
@@ -385,11 +408,38 @@
   }
 }
 
+/* Font utilities for requested families */
+.font-hero-bodoni {
+  font-family: "Bodoni Moda", serif;
+}
+.font-hero-courgette {
+  font-family: "Courgette", cursive;
+}
+.kaushan-script-regular {
+  font-family: "Kaushan Script", cursive;
+  font-weight: 400;
+}
+.lobster-two-regular {
+  font-family: "Lobster Two", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.lobster-two-bold {
+  font-family: "Lobster Two", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
 /* Enhanced Keyframe Animations */
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   33% { transform: translateY(-15px) rotate(2deg); }
   66% { transform: translateY(-25px) rotate(-2deg); }
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 @keyframes sparkle {

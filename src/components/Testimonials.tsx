@@ -48,9 +48,10 @@ const Testimonials = () => {
 
   return (
     <section id="testimonials" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 relative w-full overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-5">
         <div className="starfield" />
       </div>
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-primary/20 via-accent/10 to-secondary/20 opacity-20 mix-blend-screen" />
       
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12 sm:mb-16 lg:mb-24">
@@ -127,15 +128,15 @@ const Testimonials = () => {
         <div className="mt-16 text-center fade-in-up">
           <div className="cosmic-card max-w-4xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div className="cosmic-pulse">
+              <div className="bg-transparent shadow-none border-0 transition-none">
                 <h3 className="text-4xl font-bold text-primary mb-2">500+</h3>
                 <p className="text-muted-foreground">Happy Clients</p>
               </div>
-              <div className="cosmic-pulse" style={{ animationDelay: '1s' }}>
+              <div className="bg-transparent shadow-none border-0 transition-none">
                 <h3 className="text-4xl font-bold text-secondary mb-2">4.9/5</h3>
                 <p className="text-muted-foreground">Average Rating</p>
               </div>
-              <div className="cosmic-pulse" style={{ animationDelay: '2s' }}>
+              <div className="bg-transparent shadow-none border-0 transition-none">
                 <h3 className="text-4xl font-bold text-accent mb-2">95%</h3>
                 <p className="text-muted-foreground">Return Clients</p>
               </div>

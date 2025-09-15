@@ -34,25 +34,20 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-16 sm:mb-20 lg:mb-24">
           <div className="fade-in-up">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-left mb-6 sm:mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-              About Celestial Master
+              About Arpit Sharma
             </h2>
             <div className="space-y-6 sm:space-y-8 text-lg sm:text-xl text-muted-foreground leading-relaxed">
               <p className="text-xl sm:text-2xl font-light">
-                Welcome, dear seeker. I am <span className="text-primary font-semibold">Luna Starweaver</span>, your guide through the mystical 
-                realms of cosmic wisdom. For over two decades, I have dedicated my life to 
-                understanding the celestial forces that shape our destinies and illuminate our paths.
+                Astrologer <span className="text-primary font-semibold">Arpit Sharma</span> is a highly respected Astrologist & Numerologist 
+                with more than 8 years of experience.
               </p>
               <p className="text-base sm:text-lg">
-                My journey began in childhood when I first gazed upon the night sky and felt 
-                the profound connection between the stars above and the soul within. This 
-                calling led me to study under renowned masters across the globe, from the 
-                ancient temples of India to the sacred sites of Egypt.
+                Having guided over 10,000 people in their careers and marriages, he has built a strong
+                reputation and a loyal client base.
               </p>
               <p className="text-base sm:text-lg">
-                Today, I blend traditional astrological wisdom with modern intuitive practices, 
-                offering you a bridge between the ancient mysteries and contemporary understanding. 
-                Each reading is a sacred conversation between your soul, the cosmos, and the 
-                divine wisdom that flows through all things.
+                To expand this reach and create a professional digital presence, a modern website can
+                serve as a powerful platform.
               </p>
             </div>
             <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-6">
@@ -65,7 +60,7 @@ const About = () => {
               >
                 <span className="flex items-center gap-3">
                   <Calendar className="w-5 h-5" />
-                  Schedule Consultation
+                Schedule Consultation
                 </span>
               </button>
               <button 
@@ -77,7 +72,7 @@ const About = () => {
               >
                 <span className="flex items-center gap-3">
                   <BookOpen className="w-5 h-5" />
-                  Read My Story
+                Read My Story
                 </span>
               </button>
             </div>
@@ -96,16 +91,16 @@ const About = () => {
                 <Star className="absolute top-4 right-6 sm:right-8 w-4 h-4 sm:w-6 sm:h-6 text-secondary floating-animation" />
                 <Star className="absolute bottom-6 sm:bottom-8 left-3 sm:left-4 w-3 h-3 sm:w-4 sm:h-4 text-accent floating-animation" style={{ animationDelay: '2s' }} />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">Luna Starweaver</h3>
-              <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base">Master Astrologer & Spiritual Guide</p>
+              <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">Arpit Sharma</h3>
+              <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base">Astrologist & Numerologist</p>
               <div className="flex justify-center space-x-4 sm:space-x-6 text-xs sm:text-sm">
                 <div className="text-center">
-                  <div className="text-xl sm:text-2xl font-bold text-secondary">25+</div>
+                  <div className="text-xl sm:text-2xl font-bold text-secondary">8+</div>
                   <div className="text-muted-foreground">Years</div>
                 </div>
                 <div className="text-center">
                   <div className="text-xl sm:text-2xl font-bold text-accent">10K+</div>
-                  <div className="text-muted-foreground">Readings</div>
+                  <div className="text-muted-foreground">Clients</div>
                 </div>
                 <div className="text-center">
                   <div className="text-xl sm:text-2xl font-bold text-primary">500+</div>
@@ -147,7 +142,7 @@ const About = () => {
               {/* Icon container with enhanced animation */}
               <div className="relative z-20 text-primary mb-6 group-hover:text-secondary transition-all duration-500 flex justify-center">
                 <div className="p-4 rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:animate-icon-float group-hover:animate-icon-rotate">
-                  {achievement.icon}
+                {achievement.icon}
                 </div>
               </div>
               

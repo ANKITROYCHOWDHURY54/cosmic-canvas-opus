@@ -6,6 +6,7 @@ import Services from "@/components/Services";
 import ZodiacSigns from "@/components/ZodiacSigns";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -28,6 +29,7 @@ const Index = () => {
       <div id="contact">
         <Contact />
       </div>
+      <Footer />
     </div>
   );
 };

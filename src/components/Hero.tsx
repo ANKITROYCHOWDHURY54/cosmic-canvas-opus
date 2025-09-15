@@ -75,7 +75,7 @@ const Hero = () => {
         </div>
 
         <div className="cosmic-text-reveal">
-          <h1 className="hero-title mb-8">
+          <h1 className="hero-title kaushan-script-regular tracking-wide mb-8">
             <span className="mb-6">
               Celestial
             </span>
@@ -86,7 +86,7 @@ const Hero = () => {
         </div>
         
         <div className="cosmic-text-reveal stagger-2">
-          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl gradient-text-contrast drop-shadow mb-6 sm:mb-8 max-w-5xl mx-auto leading-relaxed font-light px-2">
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl gradient-text-contrast drop-shadow mb-6 sm:mb-8 max-w-5xl mx-auto leading-relaxed lobster-two-bold px-2">
             Unlock the mysteries of the cosmos and discover your destiny through ancient wisdom 
             and celestial insights. Let the stars guide your path to enlightenment.
           </p>
@@ -122,8 +122,14 @@ const Hero = () => {
           
           <button 
             onClick={() => scrollToSection('services')}
-            className="px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 border-2 border-primary/60 rounded-full font-semibold text-sm sm:text-base lg:text-lg text-foreground hover:bg-primary/10 hover:border-primary hover:scale-110 hover:-translate-y-1 transition-all duration-500 backdrop-blur-sm relative group glass-card w-full sm:w-auto"
+            className="px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-full font-semibold text-sm sm:text-base lg:text-lg text-foreground
+            bg-white/15 hover:bg-white/15 focus:bg-white/15 active:bg-white/15
+            border-4 border-accent/50 hover:border-primary/70
+            backdrop-blur-3xl backdrop-saturate-150 shadow-[0_8px_40px_rgba(255,255,255,0.08)] hover:scale-110 hover:-translate-y-1 transition-all duration-500 relative w-full sm:w-auto overflow-hidden"
           >
+            <div className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-white/30" />
+            <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/35 via-white/15 to-white/5" />
+            <div className="pointer-events-none absolute -inset-px rounded-full bg-[radial-gradient(120%_120%_at_0%_0%,rgba(255,255,255,0.25),transparent_60%)]" />
             <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3">
               <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>Explore Services</span>
@@ -131,7 +137,13 @@ const Hero = () => {
           </button>
           
           {/* Video Play Button */}
-          <button className="px-4 sm:px-6 py-3 sm:py-4 lg:py-5 bg-accent/10 border border-accent/30 rounded-full font-semibold text-sm sm:text-base lg:text-lg text-accent hover:bg-accent/20 hover:border-accent hover:scale-110 hover:-translate-y-1 transition-all duration-500 backdrop-blur-sm relative group w-full sm:w-auto">
+          <button className="px-4 sm:px-6 py-3 sm:py-4 lg:py-5 rounded-full font-semibold text-sm sm:text-base lg:text-lg text-foreground
+            bg-white/15 hover:bg-white/15 focus:bg-white/15 active:bg-white/15
+            border-4 border-accent/50 hover:border-primary/70
+            backdrop-blur-3xl backdrop-saturate-150 shadow-[0_8px_40px_rgba(255,255,255,0.08)] hover:scale-110 hover:-translate-y-1 transition-all duration-500 relative w-full sm:w-auto overflow-hidden">
+            <div className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-white/30" />
+            <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/35 via-white/15 to-white/5" />
+            <div className="pointer-events-none absolute -inset-px rounded-full bg-[radial-gradient(120%_120%_at_0%_0%,rgba(255,255,255,0.25),transparent_60%)]" />
             <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3">
               <Play className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>Watch Demo</span>
@@ -142,9 +154,7 @@ const Hero = () => {
         <div className="cosmic-text-reveal stagger-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 text-center">
           <div className="cosmic-card group hover:cosmic-pulse glow-on-hover relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="stellar-glow mb-4 sm:mb-6 relative z-10">
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500">25+</h3>
-            </div>
+              <h3 className="relative z-10 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 text-glow-strong text-contrast-outline">25+</h3>
             <p className="text-muted-foreground font-medium text-sm sm:text-base lg:text-lg relative z-10">Years Experience</p>
             <div className="mt-4 h-1 w-20 bg-gradient-to-r from-secondary to-transparent rounded-full mx-auto opacity-70 group-hover:opacity-100 transition-opacity duration-500 relative z-10" />
             <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500">
@@ -154,9 +164,7 @@ const Hero = () => {
           
           <div className="cosmic-card group hover:cosmic-pulse glow-on-hover relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="stellar-glow stagger-1 mb-4 sm:mb-6 relative z-10">
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500">10K+</h3>
-            </div>
+              <h3 className="relative z-10 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 text-glow-strong text-contrast-outline">10K+</h3>
             <p className="text-muted-foreground font-medium text-sm sm:text-base lg:text-lg relative z-10">Readings Given</p>
             <div className="mt-4 h-1 w-20 bg-gradient-to-r from-primary to-transparent rounded-full mx-auto opacity-70 group-hover:opacity-100 transition-opacity duration-500 relative z-10" />
             <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500">
@@ -166,9 +174,7 @@ const Hero = () => {
           
           <div className="cosmic-card group hover:cosmic-pulse glow-on-hover relative overflow-hidden sm:col-span-2 lg:col-span-1">
             <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="stellar-glow stagger-2 mb-4 sm:mb-6 relative z-10">
-              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-accent mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500">98%</h3>
-            </div>
+              <h3 className="relative z-10 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-accent mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-500 text-glow-strong text-contrast-outline">98%</h3>
             <p className="text-muted-foreground font-medium text-sm sm:text-base lg:text-lg relative z-10">Accuracy Rate</p>
             <div className="mt-4 h-1 w-20 bg-gradient-to-r from-accent to-transparent rounded-full mx-auto opacity-70 group-hover:opacity-100 transition-opacity duration-500 relative z-10" />
             <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500">
