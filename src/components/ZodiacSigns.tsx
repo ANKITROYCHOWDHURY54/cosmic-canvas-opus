@@ -27,27 +27,29 @@ const ZodiacSigns = () => {
   };
 
   return (
-    <section className="py-24 px-6 relative">
+    <section id="zodiac" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 relative w-full overflow-hidden">
       <div className="absolute inset-0 opacity-5">
         <div className="starfield" />
       </div>
       
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-20">
-          <h2 className="section-title fade-in-up">Zodiac Wisdom</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto fade-in-up stagger-1">
+        <div className="text-center mb-12 sm:mb-16 lg:mb-24">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent fade-in-up">
+            Zodiac Wisdom
+          </h2>
+          <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto fade-in-up stagger-1 leading-relaxed px-4">
             Explore the twelve celestial archetypes that influence our personalities, 
             relationships, and life paths through the cosmic wheel of the zodiac.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-16">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center mb-12 sm:mb-16">
           <div className="fade-in-up">
             <div className="relative">
               <img 
                 src={zodiacImage} 
                 alt="Zodiac Wheel" 
-                className="w-full h-96 object-cover rounded-3xl cosmic-glow constellation-rotate"
+                className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-3xl cosmic-glow constellation-rotate"
                 style={{ animationDuration: '60s' }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent rounded-3xl" />
@@ -55,10 +57,10 @@ const ZodiacSigns = () => {
           </div>
           
           <div className="fade-in-up stagger-2">
-            <h3 className="text-4xl font-bold mb-6 text-primary">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-primary">
               Discover Your Cosmic Identity
             </h3>
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
               Each zodiac sign carries unique energies, traits, and celestial influences 
               that shape who you are and how you interact with the universe. Understanding 
               your sign is the first step toward cosmic self-awareness.
@@ -68,29 +70,104 @@ const ZodiacSigns = () => {
                 const element = document.getElementById('contact');
                 if (element) element.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="hero-button"
+              className="hero-button w-full sm:w-auto"
             >
               Get Your Personal Reading
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6">
           {zodiacSigns.map((sign, index) => (
             <div 
               key={sign.name}
-              className={`cosmic-card text-center group cursor-pointer fade-in-up stagger-${(index % 4) + 1} hover:scale-105`}
+              className={`cosmic-card text-center group cursor-pointer fade-in-up stagger-${(index % 4) + 1} hover:scale-110 glow-on-hover relative overflow-hidden`}
             >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
+              {/* Flowing gradient border - only visible on hover */}
+              <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div 
+                  className="absolute inset-0 rounded-3xl p-1"
+                  style={{
+                    background: 'linear-gradient(90deg, #a855f7, #ec4899, #eab308, #a855f7)',
+                    backgroundSize: '300% 100%',
+                    animation: 'gradient-flow 2s linear infinite',
+                    boxShadow: '0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(236, 72, 153, 0.3), 0 0 60px rgba(234, 179, 8, 0.2)'
+                  }}
+                >
+                  <div className="w-full h-full bg-background rounded-3xl"></div>
+                </div>
+                {/* Additional glow layer for more visibility */}
+                <div 
+                  className="absolute inset-0 rounded-3xl p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: 'linear-gradient(90deg, #a855f7, #ec4899, #eab308, #a855f7)',
+                    backgroundSize: '300% 100%',
+                    animation: 'gradient-flow 2s linear infinite reverse',
+                    filter: 'blur(2px)',
+                    zIndex: -1
+                  }}
+                >
+                  <div className="w-full h-full bg-background rounded-3xl"></div>
+                </div>
+              </div>
+
+              {/* Floating balls/particles around the border */}
+              <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                {/* Ball 1 - Follows gradient flow */}
+                <div 
+                  className="absolute w-3 h-3 rounded-full"
+                  style={{
+                    top: '2px',
+                    left: '50%',
+                    animation: 'gradient-ball-1 2s linear infinite',
+                    boxShadow: '0 0 10px currentColor, 0 0 20px currentColor'
+                  }}
+                />
+                {/* Ball 2 - Follows gradient flow */}
+                <div 
+                  className="absolute w-2 h-2 rounded-full"
+                  style={{
+                    top: '50%',
+                    right: '2px',
+                    animation: 'gradient-ball-2 2s linear infinite',
+                    boxShadow: '0 0 8px currentColor, 0 0 16px currentColor'
+                  }}
+                />
+                {/* Ball 3 - Follows gradient flow */}
+                <div 
+                  className="absolute w-2.5 h-2.5 rounded-full"
+                  style={{
+                    bottom: '2px',
+                    left: '50%',
+                    animation: 'gradient-ball-3 2s linear infinite',
+                    boxShadow: '0 0 12px currentColor, 0 0 24px currentColor'
+                  }}
+                />
+                {/* Ball 4 - Follows gradient flow */}
+                <div 
+                  className="absolute w-1.5 h-1.5 rounded-full"
+                  style={{
+                    top: '50%',
+                    left: '2px',
+                    animation: 'gradient-ball-4 2s linear infinite',
+                    boxShadow: '0 0 6px currentColor, 0 0 12px currentColor'
+                  }}
+                />
+              </div>
+              
+              {/* Card content */}
+              <div className="relative z-10">
+              <div className="text-3xl sm:text-4xl lg:text-5xl mb-4 sm:mb-6 group-hover:scale-125 transition-transform duration-500">
                 {sign.symbol}
               </div>
-              <h4 className="font-bold text-lg mb-2 text-foreground group-hover:text-primary transition-colors duration-300">
+              <h4 className="font-bold text-sm sm:text-base lg:text-xl mb-2 sm:mb-3 text-foreground group-hover:text-primary transition-colors duration-500">
                 {sign.name}
               </h4>
-              <p className="text-sm text-muted-foreground mb-2">{sign.dates}</p>
-              <span className={`text-xs px-3 py-1 rounded-full border ${getElementColor(sign.element)} border-current`}>
+              <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">{sign.dates}</p>
+              <span className={`text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-2 rounded-full border-2 font-medium ${getElementColor(sign.element)} border-current group-hover:scale-105 transition-transform duration-300`}>
                 {sign.element}
               </span>
+              </div>
             </div>
           ))}
         </div>

@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X, Star, Moon, Sparkles } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const rippleRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -37,61 +38,87 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const createRipple = (event: React.MouseEvent<HTMLButtonElement>, itemName: string) => {
+    const button = event.currentTarget;
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    const ripple = document.createElement('div');
+    ripple.className = 'mobile-nav-ripple';
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    
+    button.appendChild(ripple);
+    
+    setTimeout(() => {
+      ripple.remove();
+    }, 600);
+  };
+
   const scrollToSection = (href: string) => {
     const elementId = href.replace("#", "");
     const element = document.getElementById(elementId);
     if (element) {
-      element.scrollIntoView({ 
-        behavior: "smooth", 
-        block: "start" 
+      // Get navigation bar height (h-20 = 80px on mobile, h-24 = 96px on larger screens)
+      const navHeight = window.innerWidth >= 640 ? 96 : 80; // sm:h-24 = 96px, h-20 = 80px
+      const elementPosition = element.offsetTop - navHeight - 20; // Extra 20px buffer
+      
+      window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth"
       });
     }
     setIsOpen(false);
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 w-full overflow-hidden ${
       scrolled 
-        ? "bg-background/95 backdrop-blur-md border-b border-border/50 shadow-lg" 
+        ? "bg-background/95 backdrop-blur-xl border-b border-border/60 shadow-2xl" 
         : "bg-transparent"
     }`}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-20 sm:h-24">
           {/* Logo */}
           <div 
-            className="flex items-center space-x-3 cursor-pointer group"
+            className="flex items-center space-x-4 cursor-pointer group"
             onClick={() => scrollToSection("#home")}
           >
             <div className="relative">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center cosmic-pulse">
-                <Moon className="w-6 h-6 text-background constellation-rotate" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-primary via-accent to-secondary rounded-full flex items-center justify-center cosmic-pulse glow-on-hover">
+                <Moon className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-background constellation-rotate" />
               </div>
-              <Star className="absolute -top-1 -right-1 w-4 h-4 text-secondary star-sparkle" />
+              <Star className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-secondary star-sparkle" />
+              <Sparkles className="absolute -bottom-1 -left-1 w-2 h-2 sm:w-3 sm:h-3 text-accent floating-animation" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+              <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-500 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent group-hover:from-primary group-hover:to-accent">
                 Celestial Guidance
               </h1>
-              <p className="text-xs text-muted-foreground">Luna Starweaver</p>
+              <p className="text-xs sm:text-sm text-muted-foreground font-medium">Luna Starweaver</p>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {navItems.map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className={`relative px-4 py-2 font-medium transition-all duration-300 hover:text-primary ${
+                className={`relative px-4 xl:px-6 py-2 xl:py-3 font-medium transition-all duration-500 hover:text-primary rounded-xl group text-sm xl:text-base ${
                   activeSection === item.href.replace("#", "")
-                    ? "text-primary"
-                    : "text-foreground hover:text-primary"
+                    ? "text-primary bg-primary/10"
+                    : "text-foreground hover:text-primary hover:bg-primary/5"
                 }`}
               >
-                {item.name}
+                <span className="relative z-10">{item.name}</span>
                 {activeSection === item.href.replace("#", "") && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full" />
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-secondary rounded-full" />
                 )}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </button>
             ))}
           </div>
@@ -100,9 +127,12 @@ const Navigation = () => {
           <div className="hidden lg:flex items-center space-x-4">
             <button 
               onClick={() => scrollToSection("#contact")}
-              className="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-background rounded-full font-semibold hover:scale-105 transition-all duration-300 cosmic-glow"
+              className="px-6 xl:px-8 py-3 xl:py-4 bg-gradient-to-r from-primary via-accent to-secondary text-background rounded-full font-semibold hover:scale-110 hover:-translate-y-1 transition-all duration-500 cosmic-glow group relative overflow-hidden text-sm xl:text-base"
             >
-              Book Reading
+              <span className="relative z-10 flex items-center gap-2">
+                <Star className="w-3 h-3 xl:w-4 xl:h-4" />
+                Book Reading
+              </span>
             </button>
           </div>
 
@@ -122,17 +152,51 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         <div className={`lg:hidden transition-all duration-500 ease-in-out ${
           isOpen 
-            ? "max-h-96 opacity-100 pb-6" 
+            ? "max-h-96 opacity-100 pb-4" 
             : "max-h-0 opacity-0 overflow-hidden"
         }`}>
-          <div className="space-y-4 pt-4 border-t border-border/30">
+          <div className="mobile-nav-backdrop mobile-nav-overlay space-y-2 pt-4 relative">
+            {/* Cosmic Aurora Background */}
+            <div className="mobile-nav-aurora"></div>
+            
+            {/* Constellation Pattern */}
+            <div className="mobile-nav-constellation">
+              <div className="mobile-nav-star"></div>
+              <div className="mobile-nav-star"></div>
+              <div className="mobile-nav-star"></div>
+              <div className="mobile-nav-star"></div>
+              <div className="mobile-nav-star"></div>
+              <div className="mobile-nav-star"></div>
+            </div>
+            
+            {/* Light Rays */}
+            <div className="mobile-nav-light-rays">
+              <div className="mobile-nav-ray"></div>
+              <div className="mobile-nav-ray"></div>
+              <div className="mobile-nav-ray"></div>
+            </div>
+            
+            {/* Animated Background Particles */}
+            <div className="mobile-nav-particles">
+              <div className="mobile-nav-particle"></div>
+              <div className="mobile-nav-particle"></div>
+              <div className="mobile-nav-particle"></div>
+              <div className="mobile-nav-particle"></div>
+            </div>
+            
+            {/* Shimmer Effect */}
+            <div className="mobile-nav-shimmer"></div>
+            
             {navItems.map((item, index) => (
               <button
                 key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className={`block w-full text-left px-4 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-muted/50 hover:text-primary fade-in-up ${
+                onClick={(e) => {
+                  createRipple(e, item.name);
+                  scrollToSection(item.href);
+                }}
+                className={`mobile-nav-item-enhanced block w-full text-left px-4 py-3 rounded-lg font-medium fade-in-up text-sm ${
                   activeSection === item.href.replace("#", "")
-                    ? "text-primary bg-muted/30"
+                    ? "text-primary active"
                     : "text-foreground"
                 }`}
                 style={{ animationDelay: `${index * 0.1}s` }}
@@ -141,8 +205,11 @@ const Navigation = () => {
               </button>
             ))}
             <button 
-              onClick={() => scrollToSection("#contact")}
-              className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-background rounded-full font-semibold hover:scale-105 transition-all duration-300"
+              onClick={(e) => {
+                createRipple(e, "Book Reading");
+                scrollToSection("#contact");
+              }}
+              className="mobile-nav-cta-enhanced w-full mt-4 px-6 py-3 text-background rounded-full font-semibold transition-all duration-300 text-sm"
             >
               Book Reading
             </button>
@@ -150,28 +217,6 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Floating Navigation Dots (Desktop) */}
-      <div className="hidden xl:block fixed right-8 top-1/2 transform -translate-y-1/2 z-40">
-        <div className="space-y-4">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => scrollToSection(item.href)}
-              className="group relative block"
-              title={item.name}
-            >
-              <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                activeSection === item.href.replace("#", "")
-                  ? "bg-primary scale-125"
-                  : "bg-muted-foreground/50 hover:bg-primary/70 hover:scale-110"
-              }`} />
-              <div className="absolute right-5 top-1/2 transform -translate-y-1/2 px-3 py-1 bg-background/90 backdrop-blur-sm rounded-lg text-sm font-medium text-foreground opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">
-                {item.name}
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
     </nav>
   );
 };

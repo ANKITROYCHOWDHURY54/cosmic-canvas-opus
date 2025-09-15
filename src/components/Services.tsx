@@ -48,53 +48,90 @@ const Services = () => {
   ];
 
   return (
-    <section className="py-24 px-6 relative">
+    <section id="services" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 relative w-full overflow-hidden">
       <div className="absolute inset-0 opacity-10">
         <div className="starfield" />
       </div>
       
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-20">
-          <h2 className="section-title fade-in-up">Sacred Services</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto fade-in-up stagger-1">
+        <div className="text-center mb-12 sm:mb-16 lg:mb-24">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent fade-in-up">
+            Sacred Services
+          </h2>
+          <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto fade-in-up stagger-1 leading-relaxed px-4">
             Choose from our comprehensive range of mystical services, each designed to illuminate 
             different aspects of your spiritual journey and cosmic connection.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16 lg:mb-20">
           {services.map((service, index) => (
             <div 
               key={service.title}
-              className={`cosmic-card fade-in-up hover:cosmic-pulse group cursor-pointer stagger-${(index % 4) + 1}`}
+              className={`cosmic-card fade-in-up group cursor-pointer stagger-${(index % 4) + 1} glow-on-hover achievement-card-hover group-hover:animate-card-rotate transition-all duration-700 ease-out hover:scale-110 hover:shadow-2xl transform origin-center`}
+              style={{ position: 'relative', display: 'block', visibility: 'visible', opacity: 1, zIndex: 10 }}
             >
-              <div className="text-primary mb-6 group-hover:text-secondary transition-colors duration-300">
-                {service.icon}
+              {/* Animated background gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out rounded-3xl" />
+
+              {/* Moving floating particles on hover */}
+              <div className="absolute top-4 right-4 w-2 h-2 bg-primary/30 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-all duration-700 ease-out group-hover:animate-float-1" />
+              <div className="absolute bottom-4 left-4 w-1 h-1 bg-accent/40 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-all duration-800 ease-out group-hover:animate-float-2" />
+              <div className="absolute top-1/2 left-2 w-1.5 h-1.5 bg-secondary/40 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-float-3 transition-all duration-750 ease-out" />
+              <div className="absolute top-1/3 right-2 w-1 h-1 bg-primary/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-float-4 transition-all duration-900 ease-out" />
+
+              {/* Moving geometric shapes */}
+              <div className="absolute top-6 left-6 w-3 h-3 border border-primary/20 opacity-0 group-hover:opacity-100 group-hover:animate-rotate-slow transition-all duration-700 ease-out" />
+              <div className="absolute bottom-6 right-6 w-2 h-2 bg-accent/20 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce-slow transition-all duration-800 ease-out" />
+
+              {/* Rotating decorative elements */}
+              <div className="absolute top-2 right-2 w-4 h-4 border-2 border-secondary/30 opacity-0 group-hover:opacity-100 group-hover:animate-spin-slow transition-all duration-700 ease-out" />
+              <div className="absolute bottom-2 left-2 w-3 h-3 border border-accent/40 opacity-0 group-hover:opacity-100 group-hover:animate-reverse-spin transition-all duration-800 ease-out" />
+              <div className="absolute top-1/2 left-1 w-2 h-2 bg-primary/30 opacity-0 group-hover:opacity-100 group-hover:animate-rotate-fast transition-all duration-600 ease-out" />
+
+              {/* Moving light rays */}
+              <div className="absolute top-0 left-1/2 w-px h-8 bg-gradient-to-b from-primary/60 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-light-ray-1 transition-all duration-700 ease-out" />
+              <div className="absolute bottom-0 right-1/3 w-px h-6 bg-gradient-to-t from-accent/60 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-light-ray-2 transition-all duration-800 ease-out" />
+
+              <div className="relative z-20 text-primary mb-8 group-hover:text-secondary transition-all duration-700 ease-out flex justify-center">
+                <div className="p-4 rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-all duration-700 ease-out group-hover:scale-125 group-hover:rotate-3 group-hover:animate-icon-float group-hover:animate-icon-rotate transform origin-center">
+                  {service.icon}
+                </div>
               </div>
               
-              <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors duration-300">
+              <h3 className="relative z-20 text-2xl font-bold mb-6 text-foreground group-hover:text-primary transition-all duration-700 ease-out text-center group-hover:scale-105 group-hover:animate-text-wiggle">
                 {service.title}
               </h3>
               
-              <p className="text-muted-foreground mb-6 leading-relaxed">
+              <p className="relative z-20 text-muted-foreground mb-8 leading-relaxed text-center group-hover:text-foreground transition-all duration-700 ease-out transform group-hover:-translate-y-1 group-hover:animate-text-float">
                 {service.description}
               </p>
               
-              <div className="flex justify-between items-center pt-6 border-t border-border/30">
-                <div>
-                  <span className="text-2xl font-bold text-secondary">{service.price}</span>
-                  <span className="text-muted-foreground ml-2">/ {service.duration}</span>
+              <div className="relative z-20 flex flex-col items-center space-y-6 pt-6 border-t border-border/30">
+                <div className="text-center">
+                  <span className="text-4xl font-bold text-secondary group-hover:text-primary transition-all duration-700 ease-out">{service.price}</span>
+                  <span className="text-muted-foreground ml-2 text-lg group-hover:text-foreground transition-all duration-700 ease-out">/ {service.duration}</span>
                 </div>
                 <button 
                   onClick={() => {
                     const element = document.getElementById('contact');
                     if (element) element.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="text-primary hover:text-secondary transition-colors duration-300 font-medium hover:scale-105 transform"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-primary/20 to-accent/20 text-primary rounded-full font-semibold hover:from-primary/30 hover:to-accent/30 hover:scale-110 transition-all duration-700 ease-out group-hover:shadow-lg group-hover:animate-icon-float transform origin-center"
                 >
-                  Book Now →
+                  <span className="flex items-center justify-center gap-2">
+                    Book Now
+                    <span className="group-hover:translate-x-1 transition-transform duration-500 ease-out">→</span>
+                  </span>
                 </button>
               </div>
+
+              {/* Bottom accent line */}
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-primary to-accent group-hover:w-16 transition-all duration-700 ease-out rounded-full" />
+
+              {/* Corner decorations */}
+              <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-primary/30 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out" />
+              <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-accent/30 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out" />
             </div>
           ))}
         </div>

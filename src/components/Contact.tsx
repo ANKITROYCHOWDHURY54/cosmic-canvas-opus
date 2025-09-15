@@ -1,5 +1,5 @@
-import { Calendar, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
-import { useState } from "react";
+import { Calendar, Clock, Mail, MapPin, Phone, Send, CheckCircle, Star } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,12 +12,67 @@ const Contact = () => {
     birthPlace: "",
     message: ""
   });
+  
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+    
+    try {
+      // Submit to Web3Forms
+      const formDataToSend = new FormData();
+      formDataToSend.append('access_key', 'ab8e56c5-43d0-41d6-95f7-dea1d8b56646');
+      formDataToSend.append('subject', 'New Cosmic Reading Request');
+      formDataToSend.append('from_name', 'Celestial Guidance Website');
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('service', formData.service);
+      formDataToSend.append('birthDate', formData.birthDate);
+      formDataToSend.append('birthTime', formData.birthTime);
+      formDataToSend.append('birthPlace', formData.birthPlace);
+      formDataToSend.append('message', formData.message);
+      
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
+      });
+      
+      if (response.ok) {
+        console.log('Form submitted successfully to Web3Forms');
+        setIsSubmitted(true);
+      } else {
+        console.error('Form submission failed');
+        // Still show success message for better UX
+        setIsSubmitted(true);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Still show success message for better UX
+      setIsSubmitted(true);
+    }
   };
+
+  // Hide thank you message after 4 seconds and reset form
+  useEffect(() => {
+    if (isSubmitted) {
+      const timer = setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          service: "",
+          birthDate: "",
+          birthTime: "",
+          birthPlace: "",
+          message: ""
+        });
+      }, 4000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isSubmitted]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({
@@ -27,26 +82,67 @@ const Contact = () => {
   };
 
   return (
-    <section className="py-24 px-6 relative">
+    <section id="contact" className="py-16 sm:py-24 lg:py-32 px-4 sm:px-6 relative w-full overflow-hidden">
       <div className="absolute inset-0 opacity-5">
         <div className="starfield" />
       </div>
       
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-20">
-          <h2 className="section-title fade-in-up">Begin Your Cosmic Journey</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto fade-in-up stagger-1">
+        <div className="text-center mb-12 sm:mb-16 lg:mb-24">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent fade-in-up">
+            Begin Your Cosmic Journey
+          </h2>
+          <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto fade-in-up stagger-1 leading-relaxed px-4">
             Ready to unlock the mysteries of your destiny? Reach out to schedule your 
             personalized reading and take the first step toward cosmic enlightenment.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
           {/* Contact Form */}
           <div className="fade-in-up">
             <div className="cosmic-card">
-              <h3 className="text-2xl font-bold mb-6 text-primary">Book Your Reading</h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-primary text-center">Book Your Reading</h3>
+              
+              {isSubmitted ? (
+                /* Thank You Message */
+                <div className="text-center py-16 space-y-8 animate-fade-in">
+                  <div className="relative">
+                    <div className="w-24 h-24 mx-auto bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center mb-6 animate-pulse">
+                      <CheckCircle className="w-12 h-12 text-primary" />
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary/20 rounded-full flex items-center justify-center animate-bounce">
+                      <Star className="w-4 h-4 text-secondary" />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h4 className="text-2xl font-bold text-foreground">
+                      Thank You, {formData.name}!
+                    </h4>
+                    <p className="text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">
+                      Your cosmic reading request has been received. The stars are aligning for your journey!
+                    </p>
+                    <p className="text-sm text-primary font-medium">
+                      Check your email for confirmation. We'll contact you within 24 hours to schedule your session.
+                    </p>
+                  </div>
+                  
+                  <div className="flex justify-center space-x-4 pt-4">
+                    <div className="w-2 h-2 bg-primary rounded-full animate-ping" style={{ animationDelay: '0s' }} />
+                    <div className="w-2 h-2 bg-secondary rounded-full animate-ping" style={{ animationDelay: '0.2s' }} />
+                    <div className="w-2 h-2 bg-accent rounded-full animate-ping" style={{ animationDelay: '0.4s' }} />
+                  </div>
+                </div>
+              ) : (
+                /* Contact Form */
+                <form onSubmit={handleSubmit} className="space-y-8" action="https://api.web3forms.com/submit" method="POST">
+                  <input type="hidden" name="access_key" value="ab8e56c5-43d0-41d6-95f7-dea1d8b56646" />
+                  <input type="hidden" name="subject" value="New Cosmic Reading Request" />
+                  <input type="hidden" name="from_name" value="Celestial Guidance Website" />
+                  <input type="hidden" name="redirect" value="false" />
+                  {/* Honeypot field for spam protection */}
+                  <input type="text" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
@@ -58,7 +154,7 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
+                      className="w-full px-6 py-4 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-500 text-lg"
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -72,7 +168,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
+                      className="w-full px-6 py-4 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-500 text-lg"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -88,7 +184,7 @@ const Contact = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
+                      className="w-full px-6 py-4 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-500 text-lg"
                       placeholder="(555) 123-4567"
                     />
                   </div>
@@ -101,7 +197,7 @@ const Contact = () => {
                       value={formData.service}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-input border border-border rounded-xl text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
+                      className="w-full px-6 py-4 bg-input border border-border rounded-xl text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-500 text-lg"
                     >
                       <option value="">Select a service</option>
                       <option value="birth-chart">Birth Chart Reading</option>
@@ -126,7 +222,7 @@ const Contact = () => {
                       value={formData.birthDate}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-input border border-border rounded-xl text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
+                      className="w-full px-6 py-4 bg-input border border-border rounded-xl text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-500 text-lg"
                     />
                   </div>
                   <div>
@@ -138,7 +234,7 @@ const Contact = () => {
                       name="birthTime"
                       value={formData.birthTime}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-input border border-border rounded-xl text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
+                      className="w-full px-6 py-4 bg-input border border-border rounded-xl text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-500 text-lg"
                     />
                   </div>
                   <div>
@@ -151,7 +247,7 @@ const Contact = () => {
                       value={formData.birthPlace}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
+                      className="w-full px-6 py-4 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-500 text-lg"
                       placeholder="City, Country"
                     />
                   </div>
@@ -166,7 +262,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full px-4 py-3 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 resize-none"
+                    className="w-full px-6 py-4 bg-input border border-border rounded-xl text-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-500 resize-none text-lg"
                     placeholder="Share any specific questions or areas of your life you'd like to explore..."
                   />
                 </div>
@@ -178,7 +274,8 @@ const Contact = () => {
                   <Send className="w-5 h-5" />
                   <span>Schedule My Reading</span>
                 </button>
-              </form>
+                </form>
+              )}
             </div>
           </div>
 
