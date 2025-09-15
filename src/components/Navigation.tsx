@@ -6,6 +6,8 @@ const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const rippleRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const isProgrammaticScroll = useRef(false);
+  const programmaticScrollTimeout = useRef<number | null>(null);
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -21,6 +23,7 @@ const Navigation = () => {
       setScrolled(window.scrollY > 50);
 
       // Update active section based on scroll position
+      if (isProgrammaticScroll.current) return; // don't override while smooth-scrolling by click
       const sections = ["home", "about", "services", "zodiac", "testimonials", "contact"];
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -61,16 +64,22 @@ const Navigation = () => {
   const scrollToSection = (href: string) => {
     const elementId = href.replace("#", "");
     const element = document.getElementById(elementId);
+    // Update active section immediately to avoid highlight lag
+    setActiveSection(elementId);
+    // Lock scroll-based updates during programmatic scroll
+    isProgrammaticScroll.current = true;
+    if (programmaticScrollTimeout.current) {
+      window.clearTimeout(programmaticScrollTimeout.current);
+    }
     if (element) {
-      // Get navigation bar height (h-20 = 80px on mobile, h-24 = 96px on larger screens)
       const navHeight = window.innerWidth >= 640 ? 96 : 80; // sm:h-24 = 96px, h-20 = 80px
       const elementPosition = element.offsetTop - navHeight - 20; // Extra 20px buffer
-      
-      window.scrollTo({
-        top: elementPosition,
-        behavior: "smooth"
-      });
+      window.scrollTo({ top: elementPosition, behavior: "smooth" });
     }
+    // Release lock after smooth scroll likely completes
+    programmaticScrollTimeout.current = window.setTimeout(() => {
+      isProgrammaticScroll.current = false;
+    }, 900);
     setIsOpen(false);
   };
 
@@ -108,17 +117,21 @@ const Navigation = () => {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className={`relative px-4 xl:px-6 py-2 xl:py-3 font-medium transition-all duration-500 hover:text-primary rounded-xl group text-sm xl:text-base ${
+                className={`relative px-4 xl:px-6 py-2 xl:py-3 pb-1 font-medium transition-all duration-500 hover:text-primary rounded-xl group text-sm xl:text-base ${
                   activeSection === item.href.replace("#", "")
                     ? "text-primary bg-primary/10"
                     : "text-foreground hover:text-primary hover:bg-primary/5"
                 }`}
               >
                 <span className="relative z-10">{item.name}</span>
-                {activeSection === item.href.replace("#", "") && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-secondary rounded-full" />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div
+                  className={`pointer-events-none absolute bottom-0 left-2 right-2 h-0.5 rounded-full z-10 transition-all duration-300 origin-left ${
+                    activeSection === item.href.replace("#", "")
+                      ? "opacity-100 scale-x-100 bg-gradient-to-r from-primary via-accent to-secondary"
+                      : "opacity-0 scale-x-0 bg-transparent"
+                  }`}
+                />
+                <div className="absolute inset-0 z-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </button>
             ))}
           </div>

@@ -1,4 +1,5 @@
 import { Calendar, Clock, Mail, MapPin, Phone, Send, CheckCircle, Star } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState, useEffect } from "react";
 
 const Contact = () => {
@@ -7,6 +8,7 @@ const Contact = () => {
     email: "",
     phone: "",
     service: "",
+    zodiacSign: "",
     birthDate: "",
     birthTime: "",
     birthPlace: "",
@@ -28,6 +30,7 @@ const Contact = () => {
       formDataToSend.append('email', formData.email);
       formDataToSend.append('phone', formData.phone);
       formDataToSend.append('service', formData.service);
+      formDataToSend.append('zodiacSign', formData.zodiacSign);
       formDataToSend.append('birthDate', formData.birthDate);
       formDataToSend.append('birthTime', formData.birthTime);
       formDataToSend.append('birthPlace', formData.birthPlace);
@@ -63,6 +66,7 @@ const Contact = () => {
           email: "",
           phone: "",
           service: "",
+          zodiacSign: "",
           birthDate: "",
           birthTime: "",
           birthPlace: "",
@@ -208,6 +212,33 @@ const Contact = () => {
                       <option value="healing">Spiritual Healing</option>
                       <option value="package">Consultation Package</option>
                     </select>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Zodiac Sign *
+                    </label>
+                    <Select value={formData.zodiacSign} onValueChange={(v) => setFormData((p) => ({ ...p, zodiacSign: v }))}>
+                      <SelectTrigger className="w-full px-6 py-4 bg-input border border-border rounded-xl text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-500 text-lg">
+                        <SelectValue placeholder="Select your zodiac" />
+                      </SelectTrigger>
+                      <SelectContent side="bottom" align="start">
+                        <SelectItem value="Aries">Aries</SelectItem>
+                        <SelectItem value="Taurus">Taurus</SelectItem>
+                        <SelectItem value="Gemini">Gemini</SelectItem>
+                        <SelectItem value="Cancer">Cancer</SelectItem>
+                        <SelectItem value="Leo">Leo</SelectItem>
+                        <SelectItem value="Virgo">Virgo</SelectItem>
+                        <SelectItem value="Libra">Libra</SelectItem>
+                        <SelectItem value="Scorpio">Scorpio</SelectItem>
+                        <SelectItem value="Sagittarius">Sagittarius</SelectItem>
+                        <SelectItem value="Capricorn">Capricorn</SelectItem>
+                        <SelectItem value="Aquarius">Aquarius</SelectItem>
+                        <SelectItem value="Pisces">Pisces</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 

@@ -126,6 +126,8 @@
 
   html {
     overflow-x: hidden;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 
   body {
@@ -134,11 +136,22 @@
     background-attachment: fixed;
     overflow-x: hidden;
     width: 100%;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 
   #root {
     overflow-x: hidden;
     width: 100%;
+  }
+
+  /* Hide scrollbars (keep scrolling) */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  #root::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -304,6 +317,19 @@
     background-clip: text;
   }
 
+  /* High-contrast gradient text for dark video backgrounds */
+  .gradient-text-contrast {
+    background: linear-gradient(90deg,
+      hsl(0 0% 100%),
+      hsl(var(--secondary)),
+      hsl(var(--accent)),
+      hsl(var(--primary))
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   .section-divider {
     height: 1px;
     background: var(--gradient-aurora);
@@ -338,11 +364,8 @@
 
   .hero-title span {
     display: block;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--secondary)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: hsl(var(--primary)); /* Fallback color */
+    color: hsl(var(--foreground));
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6), 0 0 20px hsla(280, 100%, 70%, 0.35);
   }
 
   .starfield {

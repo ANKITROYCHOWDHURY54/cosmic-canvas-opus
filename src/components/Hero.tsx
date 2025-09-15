@@ -1,5 +1,5 @@
 import { Star, Moon, Sparkles, Zap, Sun, Circle, Play, Shield, Award, Users, Clock } from "lucide-react";
-import heroImage from "@/assets/hero-cosmic-bg.jpg";
+import galaxyVideo from "@/assets/galaxy.mp4";
 
 const Hero = () => {
   const scrollToSection = (sectionId: string) => {
@@ -11,10 +11,15 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-24 pb-8 sm:pb-12 w-full">
-      {/* Enhanced Animated Background */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImage})` }}
+      {/* Background Video */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        src={galaxyVideo}
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
       />
       <div className="starfield" />
       
@@ -62,9 +67,9 @@ const Hero = () => {
       <div className="relative z-10 text-center px-4 sm:px-6 max-w-7xl mx-auto py-8 sm:py-12">
         {/* Trust Badge */}
         <div className="cosmic-text-reveal mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-primary/10 border border-primary/20 rounded-full backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-background/60 border border-border/60 rounded-full backdrop-blur-md">
             <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-            <span className="text-xs sm:text-sm font-medium text-primary">Trusted by 10,000+ Clients</span>
+            <span className="text-xs sm:text-sm font-medium gradient-text-contrast drop-shadow">Trusted by 10,000+ Clients</span>
             <Award className="w-3 h-3 sm:w-4 sm:h-4 text-secondary" />
           </div>
         </div>
@@ -81,22 +86,22 @@ const Hero = () => {
         </div>
         
         <div className="cosmic-text-reveal stagger-2">
-          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-muted-foreground mb-6 sm:mb-8 max-w-5xl mx-auto leading-relaxed font-light px-2">
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl gradient-text-contrast drop-shadow mb-6 sm:mb-8 max-w-5xl mx-auto leading-relaxed font-light px-2">
             Unlock the mysteries of the cosmos and discover your destiny through ancient wisdom 
             and celestial insights. Let the stars guide your path to enlightenment.
           </p>
           
           {/* Quick Stats */}
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-8 mb-12 sm:mb-16">
-            <div className="flex items-center justify-center gap-2 text-muted-foreground">
+            <div className="flex items-center justify-center gap-2 text-foreground drop-shadow">
               <Users className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
               <span className="text-xs sm:text-sm font-medium">10,000+ Happy Clients</span>
             </div>
-            <div className="flex items-center justify-center gap-2 text-muted-foreground">
+            <div className="flex items-center justify-center gap-2 text-foreground drop-shadow">
               <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-secondary" />
               <span className="text-xs sm:text-sm font-medium">25+ Years Experience</span>
             </div>
-            <div className="flex items-center justify-center gap-2 text-muted-foreground">
+            <div className="flex items-center justify-center gap-2 text-foreground drop-shadow">
               <Award className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
               <span className="text-xs sm:text-sm font-medium">98% Accuracy Rate</span>
             </div>
