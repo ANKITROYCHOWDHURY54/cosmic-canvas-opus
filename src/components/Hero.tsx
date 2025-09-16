@@ -6,7 +6,9 @@ const Hero = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -15,12 +17,36 @@ const Hero = () => {
     }
   };
 
+  // Intersection Observer for lazy loading
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVideoVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Video loading optimization - only when visible
+  useEffect(() => {
+    if (!isVideoVisible || !videoRef.current) return;
+
     const video = videoRef.current;
-    if (!video) return;
 
     const handleCanPlay = () => {
       setVideoLoaded(true);
+      setLoadingProgress(100);
       console.log('Video can play');
     };
 
@@ -31,11 +57,17 @@ const Hero = () => {
 
     const handleLoadStart = () => {
       console.log('Video loading started');
+      setLoadingProgress(10);
     };
 
     const handleLoadedData = () => {
       console.log('Video data loaded');
-      setVideoLoaded(true);
+      setLoadingProgress(50);
+    };
+
+    const handleLoadedMetadata = () => {
+      console.log('Video metadata loaded');
+      setLoadingProgress(30);
     };
 
     const handleProgress = () => {
@@ -44,13 +76,14 @@ const Hero = () => {
         const duration = video.duration;
         if (duration > 0) {
           const progress = (bufferedEnd / duration) * 100;
-          setLoadingProgress(Math.min(progress, 100));
+          setLoadingProgress(Math.min(progress, 90));
         }
       }
     };
 
     video.addEventListener('canplay', handleCanPlay);
     video.addEventListener('loadeddata', handleLoadedData);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
     video.addEventListener('progress', handleProgress);
     video.addEventListener('error', handleError);
     video.addEventListener('loadstart', handleLoadStart);
@@ -66,42 +99,53 @@ const Hero = () => {
     return () => {
       video.removeEventListener('canplay', handleCanPlay);
       video.removeEventListener('loadeddata', handleLoadedData);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
       video.removeEventListener('progress', handleProgress);
       video.removeEventListener('error', handleError);
       video.removeEventListener('loadstart', handleLoadStart);
     };
-  }, []);
+  }, [isVideoVisible]);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-24 pb-8 sm:pb-12 w-full">
-      {/* Background Video - Only Video Background */}
-      <video
-        ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        aria-hidden="true"
-        style={{
-          willChange: 'transform',
-          transform: 'translateZ(0)',
-          backfaceVisibility: 'hidden',
-          objectFit: 'cover',
-          objectPosition: 'center'
-        }}
-        onLoadStart={() => console.log('Video load started')}
-        onLoadedData={() => console.log('Video data loaded')}
-        onCanPlay={() => console.log('Video can play')}
-        onError={(e) => console.error('Video error:', e)}
-      >
-        <source src={galaxyVideo} type="video/mp4; codecs=avc1.42E01E" />
-        <source src={galaxyVideo} type="video/mp4" />
-      </video>
+    <section 
+      ref={heroRef}
+      id="home" 
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-24 pb-8 sm:pb-12 w-full"
+    >
+      {/* Background Video - Only load when visible */}
+      {isVideoVisible && (
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          style={{
+            willChange: 'transform',
+            transform: 'translateZ(0)',
+            backfaceVisibility: 'hidden',
+            objectFit: 'cover',
+            objectPosition: 'center'
+          }}
+        >
+          <source src={galaxyVideo} type="video/mp4; codecs=avc1.42E01E" />
+          <source src={galaxyVideo} type="video/mp4" />
+          <source src={galaxyVideo} type="video/webm" />
+        </video>
+      )}
+
+      {/* Fallback gradient background when video not loaded */}
+      {!isVideoVisible && (
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+          <div className="absolute inset-0 bg-black/20"></div>
+        </div>
+      )}
       
       {/* Video Loading Indicator - Only shows while video is loading */}
-      {!videoLoaded && !videoError && (
+      {!videoLoaded && !videoError && isVideoVisible && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm">
           <div className="flex flex-col items-center gap-6">
             <div className="relative">
@@ -122,6 +166,13 @@ const Hero = () => {
               )}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Error Fallback */}
+      {videoError && (
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+          <div className="absolute inset-0 bg-black/20"></div>
         </div>
       )}
       <div className="starfield" />

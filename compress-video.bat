@@ -1,26 +1,65 @@
 @echo off
-echo Video Compression Script for Cosmic Canvas Opus
-echo ================================================
+echo ========================================
+echo    VIDEO COMPRESSION TOOL
+echo ========================================
 echo.
-echo Current video size: 28.61 MB (too large for web)
-echo Target size: 2-5 MB
+echo This will compress your galaxy.mp4 video for faster web loading.
+echo Target: Reduce from 28.61MB to 2-5MB
 echo.
-echo This script will help you compress the video using FFmpeg
+
+REM Check if FFmpeg is installed
+ffmpeg -version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo ERROR: FFmpeg is not installed!
+    echo Please download from: https://ffmpeg.org/download.html
+    echo Add it to your system PATH and try again.
+    pause
+    exit /b 1
+)
+
+echo FFmpeg found! Starting compression...
 echo.
-echo Step 1: Install FFmpeg
-echo - Download from: https://ffmpeg.org/download.html
-echo - Or use: winget install ffmpeg
-echo.
-echo Step 2: Run this command in PowerShell:
-echo ffmpeg -i src\assets\galaxy.mp4 -c:v libx264 -crf 28 -preset medium -c:a aac -b:a 128k -movflags +faststart -vf "scale=1920:1080" src\assets\galaxy-compressed.mp4
-echo.
-echo Step 3: Replace the original file
-echo - Rename galaxy-compressed.mp4 to galaxy.mp4
-echo.
-echo Alternative: Use online compression
-echo - Go to: https://cloudconvert.com/mp4-converter
-echo - Upload galaxy.mp4
-echo - Set quality to 60-70%
-echo - Download and replace
+
+REM Create backup
+if not exist "src\assets\galaxy_original.mp4" (
+    copy "src\assets\galaxy.mp4" "src\assets\galaxy_original.mp4"
+    echo Original video backed up as galaxy_original.mp4
+)
+
+REM Compress video
+echo Compressing video...
+ffmpeg -i "src\assets\galaxy.mp4" -vcodec libx264 -crf 28 -preset medium -vf "scale=960:540" -an -movflags +faststart "src\assets\galaxy_compressed.mp4"
+
+if %errorlevel% equ 0 (
+    echo.
+    echo ========================================
+    echo    COMPRESSION SUCCESSFUL!
+    echo ========================================
+    echo.
+    echo Original size:
+    for %%I in ("src\assets\galaxy.mp4") do echo %%~zI bytes
+    echo.
+    echo Compressed size:
+    for %%I in ("src\assets\galaxy_compressed.mp4") do echo %%~zI bytes
+    echo.
+    echo Replace the original file? (Y/N)
+    set /p choice="Enter your choice: "
+    if /i "%choice%"=="Y" (
+        move "src\assets\galaxy_compressed.mp4" "src\assets\galaxy.mp4"
+        echo Original file replaced with compressed version!
+    ) else (
+        echo Compressed file saved as galaxy_compressed.mp4
+    )
+    echo.
+    echo Next steps:
+    echo 1. Test the website
+    echo 2. Deploy to Vercel
+    echo 3. Enjoy fast loading!
+) else (
+    echo.
+    echo ERROR: Compression failed!
+    echo Please check the error messages above.
+)
+
 echo.
 pause

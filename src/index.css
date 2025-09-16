@@ -1964,6 +1964,19 @@ video {
   image-rendering: crisp-edges;
   /* Reduce repaints */
   contain: layout style paint;
+  /* Additional video optimizations */
+  object-fit: cover;
+  object-position: center;
+  /* Prevent video from being selectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Optimize for mobile */
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  /* Video loading optimization */
+  preload: metadata;
 }
 
 /* Background image optimizations */
@@ -1971,4 +1984,35 @@ video {
   will-change: transform;
   transform: translateZ(0);
   backface-visibility: hidden;
+}
+
+/* Video loading states */
+.video-loading {
+  background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+  background-size: 400% 400%;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Video container optimizations */
+.video-container {
+  position: relative;
+  overflow: hidden;
+  /* GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform;
+  /* Prevent layout shifts */
+  contain: layout style paint;
+}
+
+/* Intersection observer fallback */
+.video-placeholder {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 4s ease infinite;
 }
