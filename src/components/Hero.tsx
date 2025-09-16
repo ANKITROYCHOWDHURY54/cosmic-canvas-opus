@@ -1,7 +1,13 @@
 import { Star, Moon, Sparkles, Zap, Sun, Circle, Play, Shield, Award, Users, Clock } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import galaxyVideo from "@/assets/galaxy.mp4";
+import heroCosmicBg from "@/assets/hero-cosmic-bg.jpg";
 
 const Hero = () => {
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -9,18 +15,89 @@ const Hero = () => {
     }
   };
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleCanPlay = () => {
+      setVideoLoaded(true);
+    };
+
+    const handleError = () => {
+      setVideoError(true);
+    };
+
+    const handleLoadStart = () => {
+      console.log('Video loading started');
+    };
+
+    video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('error', handleError);
+    video.addEventListener('loadstart', handleLoadStart);
+
+    // Start loading video immediately
+    video.load();
+
+    return () => {
+      video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('error', handleError);
+      video.removeEventListener('loadstart', handleLoadStart);
+    };
+  }, []);
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-24 pb-8 sm:pb-12 w-full">
-      {/* Background Video */}
+      {/* Background Video with Optimizations - Primary Background */}
       <video
-        className="absolute inset-0 w-full h-full object-cover"
-        src={galaxyVideo}
+        ref={videoRef}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          videoLoaded && !videoError ? 'opacity-100' : 'opacity-0'
+        }`}
         autoPlay
         muted
         loop
         playsInline
+        preload="metadata"
+        poster={heroCosmicBg}
+        aria-hidden="true"
+        style={{
+          willChange: 'transform',
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden'
+        }}
+      >
+        <source src={galaxyVideo} type="video/mp4" />
+        {/* Fallback for browsers that don't support video */}
+        Your browser does not support the video tag.
+      </video>
+      
+      {/* Fallback Background Image - Only shows if video fails */}
+      <div 
+        className={`absolute inset-0 w-full h-full object-cover bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${
+          videoError ? 'opacity-100' : 'opacity-0'
+        }`}
+        style={{
+          backgroundImage: `url(${heroCosmicBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
         aria-hidden="true"
       />
+      
+      {/* Video Loading Indicator - Only shows if video is taking too long */}
+      {!videoLoaded && !videoError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/5 via-transparent to-accent/5 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-4">
+            <div className="relative">
+              <div className="w-16 h-16 border-4 border-primary/20 rounded-full"></div>
+              <div className="absolute top-0 left-0 w-16 h-16 border-4 border-transparent border-t-primary rounded-full animate-spin"></div>
+            </div>
+            <p className="text-white/90 text-sm font-medium bg-black/20 px-4 py-2 rounded-full backdrop-blur-md">
+              Loading cosmic experience...
+            </p>
+          </div>
+        </div>
+      )}
       <div className="starfield" />
       
       {/* Animated Gradient Overlay */}

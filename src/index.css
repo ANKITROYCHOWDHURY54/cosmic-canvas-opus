@@ -1945,3 +1945,30 @@
 .mobile-nav-cta-enhanced:active {
   transform: translateY(-1px) scale(1.02);
 }
+
+/* Video Performance Optimizations */
+video {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  /* Hardware acceleration */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  /* Optimize for performance */
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  /* Reduce repaints */
+  contain: layout style paint;
+}
+
+/* Background image optimizations */
+.bg-cover {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
