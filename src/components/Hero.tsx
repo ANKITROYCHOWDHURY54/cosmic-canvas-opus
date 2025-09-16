@@ -1,11 +1,11 @@
 import { Star, Moon, Sparkles, Zap, Sun, Circle, Play, Shield, Award, Users, Clock } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import galaxyVideo from "@/assets/galaxy.mp4";
-import heroCosmicBg from "@/assets/hero-cosmic-bg.jpg";
 
 const Hero = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const scrollToSection = (sectionId: string) => {
@@ -21,9 +21,11 @@ const Hero = () => {
 
     const handleCanPlay = () => {
       setVideoLoaded(true);
+      console.log('Video can play');
     };
 
-    const handleError = () => {
+    const handleError = (e) => {
+      console.error('Video error:', e);
       setVideoError(true);
     };
 
@@ -31,15 +33,40 @@ const Hero = () => {
       console.log('Video loading started');
     };
 
+    const handleLoadedData = () => {
+      console.log('Video data loaded');
+      setVideoLoaded(true);
+    };
+
+    const handleProgress = () => {
+      if (video.buffered.length > 0) {
+        const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+        const duration = video.duration;
+        if (duration > 0) {
+          const progress = (bufferedEnd / duration) * 100;
+          setLoadingProgress(Math.min(progress, 100));
+        }
+      }
+    };
+
     video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('loadeddata', handleLoadedData);
+    video.addEventListener('progress', handleProgress);
     video.addEventListener('error', handleError);
     video.addEventListener('loadstart', handleLoadStart);
 
-    // Start loading video immediately
+    // Force video to start loading immediately
     video.load();
+    
+    // Try to play the video
+    video.play().catch(error => {
+      console.log('Autoplay prevented:', error);
+    });
 
     return () => {
       video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('loadeddata', handleLoadedData);
+      video.removeEventListener('progress', handleProgress);
       video.removeEventListener('error', handleError);
       video.removeEventListener('loadstart', handleLoadStart);
     };
@@ -47,54 +74,53 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-24 pb-8 sm:pb-12 w-full">
-      {/* Background Video with Optimizations - Primary Background */}
+      {/* Background Video - Only Video Background */}
       <video
         ref={videoRef}
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-          videoLoaded && !videoError ? 'opacity-100' : 'opacity-0'
-        }`}
+        className="absolute inset-0 w-full h-full object-cover"
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
-        poster={heroCosmicBg}
+        preload="auto"
         aria-hidden="true"
         style={{
           willChange: 'transform',
           transform: 'translateZ(0)',
-          backfaceVisibility: 'hidden'
+          backfaceVisibility: 'hidden',
+          objectFit: 'cover',
+          objectPosition: 'center'
         }}
+        onLoadStart={() => console.log('Video load started')}
+        onLoadedData={() => console.log('Video data loaded')}
+        onCanPlay={() => console.log('Video can play')}
+        onError={(e) => console.error('Video error:', e)}
       >
+        <source src={galaxyVideo} type="video/mp4; codecs=avc1.42E01E" />
         <source src={galaxyVideo} type="video/mp4" />
-        {/* Fallback for browsers that don't support video */}
-        Your browser does not support the video tag.
       </video>
       
-      {/* Fallback Background Image - Only shows if video fails */}
-      <div 
-        className={`absolute inset-0 w-full h-full object-cover bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${
-          videoError ? 'opacity-100' : 'opacity-0'
-        }`}
-        style={{
-          backgroundImage: `url(${heroCosmicBg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-        aria-hidden="true"
-      />
-      
-      {/* Video Loading Indicator - Only shows if video is taking too long */}
+      {/* Video Loading Indicator - Only shows while video is loading */}
       {!videoLoaded && !videoError && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/5 via-transparent to-accent/5 backdrop-blur-sm">
-          <div className="flex flex-col items-center gap-4">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-6">
             <div className="relative">
-              <div className="w-16 h-16 border-4 border-primary/20 rounded-full"></div>
-              <div className="absolute top-0 left-0 w-16 h-16 border-4 border-transparent border-t-primary rounded-full animate-spin"></div>
+              <div className="w-20 h-20 border-4 border-primary/20 rounded-full"></div>
+              <div className="absolute top-0 left-0 w-20 h-20 border-4 border-transparent border-t-primary rounded-full animate-spin"></div>
             </div>
-            <p className="text-white/90 text-sm font-medium bg-black/20 px-4 py-2 rounded-full backdrop-blur-md">
-              Loading cosmic experience...
-            </p>
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-white/90 text-sm font-medium bg-black/20 px-4 py-2 rounded-full backdrop-blur-md">
+                Loading cosmic experience...
+              </p>
+              {loadingProgress > 0 && (
+                <div className="w-48 bg-black/20 rounded-full h-2 backdrop-blur-md">
+                  <div 
+                    className="bg-gradient-to-r from-primary to-accent h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${loadingProgress}%` }}
+                  ></div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
