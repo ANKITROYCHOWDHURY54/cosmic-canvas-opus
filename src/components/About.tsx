@@ -33,7 +33,7 @@ const About = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-16 sm:mb-20 lg:mb-24">
           <div className="fade-in-up">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-left mb-6 sm:mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-left mb-6 sm:mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent font-kings">
               About Arpit Sharma
             </h2>
             <div className="space-y-6 sm:space-y-8 text-lg sm:text-xl text-muted-foreground leading-relaxed">

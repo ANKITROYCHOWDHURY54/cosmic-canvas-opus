@@ -180,29 +180,26 @@ const Hero = () => {
       {/* Animated Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 animate-pulse" />
       
-      {/* Floating Geometric Shapes - Hidden on mobile for performance */}
-      <div className="hidden sm:block absolute top-1/4 left-1/4 w-32 h-32 border border-primary/20 rounded-full animate-spin" style={{ animationDuration: '20s' }} />
-      <div className="hidden sm:block absolute bottom-1/4 right-1/4 w-24 h-24 border border-secondary/20 rounded-full animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse' }} />
-      <div className="hidden md:block absolute top-1/2 right-1/3 w-16 h-16 border border-accent/20 rounded-full animate-spin" style={{ animationDuration: '25s' }} />
+      {/* Floating Geometric Shapes removed as requested */}
       
       {/* Enhanced Floating Particles - Responsive sizing */}
       <div className="absolute top-20 left-4 sm:left-20 particle-field">
-        <Star className="w-6 h-6 sm:w-8 sm:h-8 text-secondary stellar-glow" />
+        <Star className="w-6 h-6 sm:w-8 sm:h-8 text-secondary filter-none drop-shadow-none mix-blend-screen" />
       </div>
       <div className="absolute top-40 right-4 sm:right-32 particle-field stagger-2">
-        <Moon className="w-8 h-8 sm:w-10 sm:h-10 text-primary stellar-glow constellation-rotate" />
+        <Moon className="w-8 h-8 sm:w-10 sm:h-10 text-primary filter-none drop-shadow-none mix-blend-screen" />
       </div>
       <div className="absolute bottom-32 left-4 sm:left-16 particle-field stagger-3">
-        <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-accent stellar-glow" />
+        <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-accent filter-none drop-shadow-none mix-blend-screen" />
       </div>
       <div className="absolute top-60 left-1/4 particle-field stagger-4">
-        <Zap className="w-6 h-6 sm:w-7 sm:h-7 text-secondary stellar-glow" />
+        <Zap className="w-6 h-6 sm:w-7 sm:h-7 text-secondary filter-none drop-shadow-none mix-blend-screen" />
       </div>
       <div className="absolute bottom-48 right-4 sm:right-20 particle-field stagger-5">
-        <Sun className="w-7 h-7 sm:w-9 sm:h-9 text-primary stellar-glow constellation-rotate" style={{ animationDuration: '25s' }} />
+        <Sun className="w-7 h-7 sm:w-9 sm:h-9 text-primary filter-none drop-shadow-none mix-blend-screen" style={{ animationDuration: '25s' }} />
       </div>
       <div className="absolute top-80 right-1/3 particle-field stagger-6">
-        <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-accent stellar-glow" />
+        <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-accent filter-none drop-shadow-none mix-blend-screen" />
       </div>
       
       {/* Orbital Elements */}
@@ -229,7 +226,7 @@ const Hero = () => {
         </div>
 
         <div className="cosmic-text-reveal">
-          <h1 className="hero-title kaushan-script-regular tracking-wide mb-8">
+          <h1 className="hero-title great-vibes-regular tracking-wide mb-8 font-extrabold text-contrast-outline text-glow-strong">
             <span className="mb-6">
               Celestial
             </span>

@@ -1,4 +1,16 @@
 import zodiacImage from "@/assets/zodiac-wheel.jpg";
+import img1 from "@/assets/Image1.png";
+import img2 from "@/assets/Image2.png";
+import img3 from "@/assets/Image3.png";
+import img4 from "@/assets/Image4.png";
+import img5 from "@/assets/Image5.png";
+import img6 from "@/assets/Image6.png";
+import img7 from "@/assets/Image7.png";
+import img8 from "@/assets/Image8.png";
+import img9 from "@/assets/Image9.png";
+import img10 from "@/assets/Image10.png";
+import img11 from "@/assets/Image11.png";
+import img12 from "@/assets/Image12.png";
 
 const ZodiacSigns = () => {
   const zodiacSigns = [
@@ -34,7 +46,7 @@ const ZodiacSigns = () => {
       
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12 sm:mb-16 lg:mb-24">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent fade-in-up">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent fade-in-up font-kings">
             Zodiac Wisdom
           </h2>
           <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto fade-in-up stagger-1 leading-relaxed px-4">
@@ -157,8 +169,16 @@ const ZodiacSigns = () => {
               
               {/* Card content */}
               <div className="relative z-10">
-              <div className="text-3xl sm:text-4xl lg:text-5xl mb-4 sm:mb-6 group-hover:scale-125 transition-transform duration-500">
-                {sign.symbol}
+              <div className="mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-500 flex items-center justify-center">
+                {(() => {
+                  const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12];
+                  const src = images[index % images.length];
+                  return (
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden ring-2 ring-primary/30 shadow-md">
+                      <img src={src} alt={`${sign.name} image`} className="w-full h-full object-cover object-center select-none pointer-events-none scale-125" />
+                    </div>
+                  );
+                })()}
               </div>
               <h4 className="font-bold text-sm sm:text-base lg:text-xl mb-2 sm:mb-3 text-foreground group-hover:text-primary transition-colors duration-500">
                 {sign.name}

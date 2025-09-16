@@ -7,42 +7,42 @@ const Services = () => {
       icon: <Gem className="w-8 h-8" />,
       title: "Birth Chart Reading",
       description: "Discover your cosmic blueprint through detailed natal chart analysis. Understand your personality, strengths, and life purpose.",
-      price: "$150",
+      price: "₹11,175",
       duration: "90 minutes"
     },
     {
       icon: <Eye className="w-8 h-8" />,
       title: "Tarot Card Reading",
       description: "Gain insight into your past, present, and future through the ancient wisdom of tarot cards.",
-      price: "$80",
+      price: "₹5,960",
       duration: "60 minutes"
     },
     {
       icon: <Hand className="w-8 h-8" />,
       title: "Palm Reading",
       description: "Uncover the secrets written in your hands. Learn about your life path, love lines, and destiny.",
-      price: "$60",
+      price: "₹4,470",
       duration: "45 minutes"
     },
     {
       icon: <Heart className="w-8 h-8" />,
       title: "Love Compatibility",
       description: "Explore romantic compatibility through astrological synastry and relationship dynamics.",
-      price: "$120",
+      price: "₹8,940",
       duration: "75 minutes"
     },
     {
       icon: <Star className="w-8 h-8" />,
       title: "Career Guidance",
       description: "Find your ideal career path using astrological insights and planetary influences.",
-      price: "$100",
+      price: "₹7,450",
       duration: "60 minutes"
     },
     {
       icon: <Zap className="w-8 h-8" />,
       title: "Spiritual Healing",
       description: "Cleanse negative energy and align your chakras for spiritual wellness and growth.",
-      price: "$90",
+      price: "₹6,705",
       duration: "90 minutes"
     }
   ];
@@ -56,7 +56,7 @@ const Services = () => {
       
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12 sm:mb-16 lg:mb-24">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent fade-in-up">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent fade-in-up font-kings">
             Sacred Services
           </h2>
           <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto fade-in-up stagger-1 leading-relaxed px-4">
@@ -157,13 +157,13 @@ const Services = () => {
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <span className="px-4 py-2 bg-primary/20 rounded-full text-primary font-medium">
-                    Full Life Reading - $280
+                    Full Life Reading - ₹20,860
                   </span>
                   <span className="px-4 py-2 bg-secondary/20 rounded-full text-secondary font-medium">
-                    Relationship Insight - $180
+                    Relationship Insight - ₹13,410
                   </span>
                   <span className="px-4 py-2 bg-accent/20 rounded-full text-accent font-medium">
-                    Career & Purpose - $220
+                    Career & Purpose - ₹16,390
                   </span>
                 </div>
               </div>
